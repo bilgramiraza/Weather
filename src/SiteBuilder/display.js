@@ -41,8 +41,8 @@ function display(data){
     humidity.textContent = (data.humidity).toString() + ' %';
     windSpeed.textContent = (data.windSpeed).toString() + ' m/s';
     windDirection.textContent = data.windDirection;
-    rise.textContent = new Date(data.sunrise);
-    set.textContent = new Date(data.sunset);
+    rise.textContent = new Date(data.sunrise * 1000);
+    set.textContent = new Date(data.sunset * 1000);
 }
 
 export {display};

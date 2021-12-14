@@ -15,7 +15,7 @@ function basicParse(rawData){
         "lat": rawData.coord.lat,
         "lon": rawData.coord.lon,
         "location": rawData.name,
-        "icon": `http://openweathermap.org/img/wn/${rawData.weather[0].icon}@2x.png`,
+        "icon": `http://openweathermap.org/img/wn/${rawData.weather[0].icon}@4x.png`,
         "temp": parseInt(rawData.main.temp),
         "weather": rawData.weather[0].main,
         "tempMax": parseInt(rawData.main["temp_max"]),
@@ -24,8 +24,7 @@ function basicParse(rawData){
         "pressure": rawData.main.pressure,
         "humidity": rawData.main.humidity,
         "visibility": rawData.visibility,
-        "sunrise": rawData.sys.sunrise,
-        "sunset": rawData.sys.sunset,
+        "clouds": rawData.clouds.all,
         "windSpeed": rawData.wind.speed,
         "windDirection": deg,
     };

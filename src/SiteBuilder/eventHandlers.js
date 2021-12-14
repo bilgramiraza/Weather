@@ -20,6 +20,5 @@ export default eventHandlers;
 async function app() {
     const seachBar = document.querySelector("#searchBar");
     const data = await weatherAPI(seachBar.value);
-    console.log(data);
     display(data);
 }

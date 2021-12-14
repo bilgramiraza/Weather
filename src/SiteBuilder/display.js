@@ -24,12 +24,13 @@ function display(data){
     const minTemp = document.querySelector(".minTemp");
     const maxTemp = document.querySelector(".maxTemp");
     const discription = document.querySelector(".discription");
-    const pressure = document.querySelector(".pressure");
-    const humidity = document.querySelector(".humidity");
-    const windSpeed = document.querySelector(".windSpeed");
-    const windDirection = document.querySelector(".windDirection");
-    const rise = document.querySelector(".rise");
-    const set = document.querySelector(".set");
+    const feelsLike = document.querySelector(".feelsLike").lastElementChild;
+    const pressure = document.querySelector(".pressure").lastElementChild;
+    const humidity = document.querySelector(".humidity").lastElementChild;
+    const visibility = document.querySelector(".visibility").lastElementChild;
+    const cloudCover = document.querySelector(".clouds").lastElementChild;
+    const windSpeed = document.querySelector(".windSpeed").lastElementChild;
+    const windDirection = document.querySelector(".windDirection").lastElementChild;
 
     location.textContent = data.location;
     temp.textContent = (data.temp - 273).toString() + ' °C';
@@ -37,12 +38,14 @@ function display(data){
     minTemp.textContent = (data.tempMin - 273).toString() + ' °C';
     maxTemp.textContent = (data.tempMax - 273).toString() + ' °C';
     discription.textContent = data.weather;
+    feelsLike.textContent = (data.feelsLike - 273).toString() + ' °C';
     pressure.textContent = (data.pressure).toString() + ' Pa'
     humidity.textContent = (data.humidity).toString() + ' %';
+    visibility.textContent = (data.visibility).toString() + 'm';
+    cloudCover.textContent = (data.clouds).toString() + '%';
     windSpeed.textContent = (data.windSpeed).toString() + ' m/s';
     windDirection.textContent = data.windDirection;
-    rise.textContent = new Date(data.sunrise * 1000);
-    set.textContent = new Date(data.sunset * 1000);
+
 }
 
 export {display};

@@ -29,8 +29,7 @@ async function weatherAPIHandling(location) {
                 "pressure": 0,
                 "humidity": 0,
                 "visibility": 0,
-                "sunrise": 0,
-                "sunset": 0,
+                "clouds": 0,
                 "windSpeed": 0,
                 "windDirection": "",
             };
@@ -45,5 +44,4 @@ async function weatherAPIHandling(location) {
         return nullData;
     }
 }
-
 export {weatherAPIHandling as weatherAPI};

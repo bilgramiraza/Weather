@@ -1,5 +1,4 @@
-
-function basicParse(rawData){
+function currentWeatherParse(rawData){
 
     let deg= '';
     if(rawData.wind.deg<=45 || rawData.wind.deg>=315)
@@ -15,12 +14,12 @@ function basicParse(rawData){
         "lat": rawData.coord.lat,
         "lon": rawData.coord.lon,
         "location": rawData.name,
-        "icon": `http://openweathermap.org/img/wn/${rawData.weather[0].icon}@4x.png`,
-        "temp": parseInt(rawData.main.temp),
+        "icon": rawData.weather[0].icon,
+        "temp": rawData.main.temp,
         "weather": rawData.weather[0].main,
-        "tempMax": parseInt(rawData.main["temp_max"]),
-        "tempMin": parseInt(rawData.main["temp_min"]),
-        "feelsLike": parseInt(rawData.main["feels_like"]),
+        "tempMax": rawData.main["temp_max"],
+        "tempMin": rawData.main["temp_min"],
+        "feelsLike": rawData.main["feels_like"],
         "pressure": rawData.main.pressure,
         "humidity": rawData.main.humidity,
         "visibility": rawData.visibility,
@@ -30,5 +29,34 @@ function basicParse(rawData){
     };
     return data;
 }
+function forecastParse(data) {
+    const hours = dayParse(data.hourly);
+    const days = weekParse(data.daily);
+    return [hours.slice(1,25), days.slice(1,8)];
+}
 
-export {basicParse};
+function dayParse(data) {
+    const Day = data.map((item) =>
+        ({
+            time : item.dt,
+            temp : item.temp,
+            icon : item.weather[0].icon,
+            disc : item.weather[0].description,
+            pop : item.pop,
+        }));
+    return Day;
+}
+function weekParse(data) {
+    const Week = data.map((item) =>
+        ({
+            date : item.dt,
+            minTemp : item.temp.min,
+            maxTemp : item.temp.max,
+            icon : item.weather[0].icon,
+            disc : item.weather[0].description,
+            pop : item.pop,
+        }));
+    return Week;
+}
+
+export {currentWeatherParse, forecastParse};

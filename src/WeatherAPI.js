@@ -1,12 +1,19 @@
  import {ErrorDisplay} from './ErrorHandling/errorHandling';
- import {basicParse} from './JSONParser';
+ import {currentWeatherParse, forecastParse} from './JSONParser';
 
  async function weatherAPI (location){
     const APIKey = '2de6ab5d3bf8eae8e2a6adb9b25e0dfe';
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${APIKey}`;
     const response = await fetch(url,{mode:'cors'});
     return response;
-};
+}
+
+async function forecastAPI(lat, lon) {
+    const APIKey = '2de6ab5d3bf8eae8e2a6adb9b25e0dfe';
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,current&appid=${APIKey}`;
+    const response = await fetch(url,{mode:'cors'});
+    return response;
+}
 
 function responseCheck(response) {
     if(!response.ok)
@@ -16,32 +23,27 @@ function responseCheck(response) {
 }
 
 async function weatherAPIHandling(location) {
-    let nullData = {
-                "lat": 0,
-                "lon": 0,
-                "location": "",
-                "icon": "",
-                "temp": 273,
-                "weather": "",
-                "tempMax": 273,
-                "tempMin": 273,
-                "feelsLike": 273,
-                "pressure": 0,
-                "humidity": 0,
-                "visibility": 0,
-                "clouds": 0,
-                "windSpeed": 0,
-                "windDirection": "",
-            };
     try {
         const response = await weatherAPI(location)
                                .then(responseCheck);
         const rawData = await response.json();
-        const data = basicParse(rawData);
+        const data = currentWeatherParse(rawData);
         return data;
     } catch (error) {
         ErrorDisplay(error);
-        return nullData;
+        return null;
     }
 }
-export {weatherAPIHandling as weatherAPI};
+async function forecastAPIHandling(lat,lon) {
+    try {
+        const response = await forecastAPI(lat, lon)
+                               .then(responseCheck);
+        const rawData = await response.json();
+        const [hoursData, daysData] = forecastParse(rawData);
+        return [hoursData, daysData];
+    } catch (error) {
+        ErrorDisplay(error);
+        return [null, null];
+    }
+}
+export {weatherAPIHandling as weatherAPI, forecastAPIHandling as forecastAPI};

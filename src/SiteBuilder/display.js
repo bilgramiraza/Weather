@@ -33,12 +33,12 @@ function display(data){
     const windDirection = document.querySelector(".windDirection").lastElementChild;
 
     location.textContent = data.location;
-    temp.textContent = (data.temp - 273).toString() + ' °C';
-    img.src = data.icon;
-    minTemp.textContent = (data.tempMin - 273).toString() + ' °C';
-    maxTemp.textContent = (data.tempMax - 273).toString() + ' °C';
+    temp.textContent = (parseInt((data.temp - 273.15))).toString() + '°';
+    img.src = `http://openweathermap.org/img/wn/${data.icon}@4x.png`;
+    minTemp.textContent = (parseInt((data.tempMin - 273.15))).toString() + '°';
+    maxTemp.textContent = (parseInt((data.tempMax - 273.15))).toString() + '°';
     discription.textContent = data.weather;
-    feelsLike.textContent = (data.feelsLike - 273).toString() + ' °C';
+    feelsLike.textContent = (parseInt((data.feelsLike - 273.15))).toString() + '°';
     pressure.textContent = (data.pressure).toString() + ' Pa'
     humidity.textContent = (data.humidity).toString() + ' %';
     visibility.textContent = (data.visibility).toString() + 'm';

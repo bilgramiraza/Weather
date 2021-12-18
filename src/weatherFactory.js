@@ -4,8 +4,8 @@ class Weather{
         this.lon = null;
         this.location = null;
         this._currentWeather = {};
-        this._hourly = [{}];
-        this._daily = [{}];
+        this._hourly = [];
+        this._daily = [];
     }
     set currentWeather(data){
         this._currentWeather = data;

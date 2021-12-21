@@ -1,23 +1,21 @@
-// import DOMBuilder from "../DOM/DOMBuilder";
-// import pageLayout from "./pageLayout";
+import DOMBuilder from "../DOM/DOMBuilder";
+import {hourElement, dayElement} from "../DOM/DOMElements";
 
+function display(weather){
+    displayCurrent(weather.getCurrentWeather());
+    if(weather.forecastExists())
+        displayForecast(weather.getHourlyForcast(), weather.getWeeklyForcast());
+}
 
-// const basePageBuilder = ()=> {
-//     pageLayout.forEach((obj)=>{
-//         DOMBuilder(obj);
-//     });
+export {display};
 
-// }
+function clearPanel(parentNode) {
+    while(parentNode.firstChild){
+        parentNode.removeChild(parentNode.lastChild);
+    }
+}
 
-// function clearPanel(parentNode) {
-//     while(parentNode.firstChild){
-//         parentNode.removeChild(parentNode.lastChild);
-//     }
-// }
-
-// export {basePageBuilder};
-
-function display(data){
+function displayCurrent(data){
     const location = document.querySelector(".location");
     const temp = document.querySelector(".temp");
     const img = document.querySelector(".icon");
@@ -45,7 +43,33 @@ function display(data){
     cloudCover.textContent = (data.clouds).toString() + '%';
     windSpeed.textContent = (data.windSpeed).toString() + ' m/s';
     windDirection.textContent = data.windDirection;
-
 }
 
-export {display};
+function displayForecast(hourForecast, dayForecast) {
+    buildForecastDOM();
+    const hourElements = document.querySelectorAll(".hour");
+    const dayElements = document.querySelectorAll(".day");
+    hourElements.forEach((element, index)=>{
+        element.children[0].textContent = new Date(hourForecast[index].time).getHours();
+        element.children[1].src = `http://openweathermap.org/img/wn/${hourForecast[index].icon}@4x.png`;
+        element.children[1].setAttribute('alt', hourForecast[index].disc);
+        element.children[2].textContent = `${hourForecast[index].temp}°C`;
+    });
+    dayElements.forEach((element, index)=>{
+        element.children[0].textContent = new Date(dayForecast[index].date).getDate();
+        element.children[1].src = `http://openweathermap.org/img/wn/${dayForecast[index].icon}@4x.png`;
+        element.children[1].setAttribute('alt', dayForecast[index].disc);
+        element.children[2].textContent = `${dayForecast[index].minTemp}°C / ${dayForecast[index].maxTemp}°C`;
+    });
+}
+
+function buildForecastDOM() {
+    const hourlyParent = document.querySelector(".hourly");
+    const dailyParent = document.querySelector(".daily");
+    clearPanel(hourlyParent);
+    clearPanel(dailyParent);
+    for(let i=0; i<24; i++)
+        DOMBuilder(hourElement,hourlyParent);
+    for(let i=0; i<7; i++)
+        DOMBuilder(dayElement, dailyParent);
+}

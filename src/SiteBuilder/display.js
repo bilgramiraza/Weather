@@ -7,13 +7,16 @@ function display(weather){
         displayForecast(weather.getHourlyForcast(), weather.getWeeklyForcast());
 }
 
-export {display};
-
-function clearPanel(parentNode) {
-    while(parentNode.firstChild){
-        parentNode.removeChild(parentNode.lastChild);
-    }
+function buildForecastDOM() {
+    const hourlyParent = document.querySelector(".hourly");
+    const dailyParent = document.querySelector(".daily");
+    for(let i=0; i<24; i++)
+        DOMBuilder(hourElement,hourlyParent);
+    for(let i=0; i<7; i++)
+        DOMBuilder(dayElement, dailyParent);
 }
+
+export {display, buildForecastDOM};
 
 function displayCurrent(data){
     const location = document.querySelector(".location");
@@ -30,46 +33,69 @@ function displayCurrent(data){
     const windSpeed = document.querySelector(".windSpeed").lastElementChild;
     const windDirection = document.querySelector(".windDirection").lastElementChild;
 
+    const units = document.querySelector('.units>input').checked;
+
     location.textContent = data.location;
-    temp.textContent = (parseInt((data.temp - 273.15))).toString() + '°';
     img.src = `http://openweathermap.org/img/wn/${data.icon}@4x.png`;
-    minTemp.textContent = (parseInt((data.tempMin - 273.15))).toString() + '°';
-    maxTemp.textContent = (parseInt((data.tempMax - 273.15))).toString() + '°';
     discription.textContent = data.weather;
-    feelsLike.textContent = (parseInt((data.feelsLike - 273.15))).toString() + '°';
     pressure.textContent = (data.pressure).toString() + ' Pa'
     humidity.textContent = (data.humidity).toString() + ' %';
-    visibility.textContent = (data.visibility).toString() + 'm';
     cloudCover.textContent = (data.clouds).toString() + '%';
-    windSpeed.textContent = (data.windSpeed).toString() + ' m/s';
     windDirection.textContent = data.windDirection;
+
+    if(units){
+        temp.textContent = `${(parseInt(data.temp*1.8)+32)}°F`;
+        minTemp.textContent = `${(parseInt(data.tempMin*1.8)+32)}°F`;
+        maxTemp.textContent = `${(parseInt(data.tempMax*1.8)+32)}°F`;
+        feelsLike.textContent = `${(parseInt(data.feelsLike*1.8)+32)}°F`;
+        visibility.textContent = `${(parseFloat(data.visibility/1609).toFixed(2))} mi`;
+        windSpeed.textContent = `${(parseFloat(data.windSpeed*2.237).toFixed(2))} mi/hr`;
+    }
+    else{
+        temp.textContent = `${(parseInt(data.temp))}°C`;
+        minTemp.textContent = `${(parseInt(data.tempMin))}°C`;
+        maxTemp.textContent = `${(parseInt(data.tempMax))}°C`;
+        feelsLike.textContent = `${(parseInt(data.feelsLike))}°C`;
+        visibility.textContent = `${(parseFloat(data.visibility/1000).toFixed(2))} km`;
+        windSpeed.textContent = `${(parseFloat(data.windSpeed*3.6).toFixed(2))} km/h`;
+    }
 }
 
 function displayForecast(hourForecast, dayForecast) {
-    buildForecastDOM();
     const hourElements = document.querySelectorAll(".hour");
     const dayElements = document.querySelectorAll(".day");
+    const units = document.querySelector('.units>input').checked;
+
     hourElements.forEach((element, index)=>{
-        element.children[0].textContent = new Date(hourForecast[index].time).getHours();
+        let time = new Date(hourForecast[index].time).getHours();
+        let hour =`${time} AM`;
+        if(time === 0)
+            hour = '12 AM';
+        else if(time === 12)
+            hour = '12 PM';
+        else if(time>12)
+            hour = `${time-12} PM`;
+        
+        element.children[0].textContent = hour;
         element.children[1].src = `http://openweathermap.org/img/wn/${hourForecast[index].icon}@4x.png`;
         element.children[1].setAttribute('alt', hourForecast[index].disc);
-        element.children[2].textContent = `${hourForecast[index].temp}°C`;
+        let temp = `${parseInt(hourForecast[index].temp)}°C`;
+        if(units)
+            temp = `${(parseInt(hourForecast[index].temp*1.8)+32)}°F`;
+
+        element.children[2].textContent = `${temp}`;
     });
+
     dayElements.forEach((element, index)=>{
         element.children[0].textContent = new Date(dayForecast[index].date).getDate();
         element.children[1].src = `http://openweathermap.org/img/wn/${dayForecast[index].icon}@4x.png`;
         element.children[1].setAttribute('alt', dayForecast[index].disc);
-        element.children[2].textContent = `${dayForecast[index].minTemp}°C / ${dayForecast[index].maxTemp}°C`;
+        let minTemp = `${parseInt(dayForecast[index].minTemp)}°C`;
+        let maxTemp = `${parseInt(dayForecast[index].maxTemp)}°C`;
+        if(units){
+            minTemp = `${(parseInt(dayForecast[index].minTemp*1.8)+32)}°F`;
+            maxTemp = `${(parseInt(dayForecast[index].maxTemp*1.8)+32)}°F`;
+        }
+        element.children[2].textContent = `${minTemp} ${maxTemp}`;
     });
-}
-
-function buildForecastDOM() {
-    const hourlyParent = document.querySelector(".hourly");
-    const dailyParent = document.querySelector(".daily");
-    clearPanel(hourlyParent);
-    clearPanel(dailyParent);
-    for(let i=0; i<24; i++)
-        DOMBuilder(hourElement,hourlyParent);
-    for(let i=0; i<7; i++)
-        DOMBuilder(dayElement, dailyParent);
 }

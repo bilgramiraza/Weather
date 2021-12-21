@@ -3,14 +3,14 @@
 
  async function weatherAPI (location){
     const APIKey = '2de6ab5d3bf8eae8e2a6adb9b25e0dfe';
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${APIKey}`;
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${APIKey}&units=metric`;
     const response = await fetch(url,{mode:'cors'});
     return response;
 }
 
 async function forecastAPI(lat, lon) {
     const APIKey = '2de6ab5d3bf8eae8e2a6adb9b25e0dfe';
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,current&appid=${APIKey}`;
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}&units=metric&exclude=minutely,current`;
     const response = await fetch(url,{mode:'cors'});
     return response;
 }

@@ -38,23 +38,21 @@ function forecastParse(data) {
 function dayParse(data) {
     const Day = data.map((item) =>
         ({
-            time : item.dt,
+            time : item.dt*1000,
             temp : item.temp,
             icon : item.weather[0].icon,
             disc : item.weather[0].description,
-            pop : item.pop,
         }));
     return Day;
 }
 function weekParse(data) {
     const Week = data.map((item) =>
         ({
-            date : item.dt,
+            date : item.dt*1000,
             minTemp : item.temp.min,
             maxTemp : item.temp.max,
             icon : item.weather[0].icon,
             disc : item.weather[0].description,
-            pop : item.pop,
         }));
     return Week;
 }

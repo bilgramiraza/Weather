@@ -20,17 +20,32 @@ body{
     display: flex;
     flex-direction: column;
     width: 99vw;
+    min-height: 100vh;
 }
 header{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    height: 10%;
+    padding: 0.5rem;
 }
 .search{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+}
+.units>input{
+    display: none;
+}
+.units>label{
+    font-size: larger;
+}
+.units>label::after{
+    content: "C";
+}
+.units>input:checked+label::after{
+    content: "F";
 }
 main{
     width: 99%;
@@ -73,11 +88,14 @@ main>div{
 section{
     display: flex;
     flex-direction: column;
+    height: 30%;
 }
 .comfort,
 .wind{
     display: flex;
     flex-direction: row;
+    height: 49%;
+    margin: 0.25rem 0;
 }
 .humidity{
     width: 49%;
@@ -85,8 +103,17 @@ section{
 .subcomfort,
 .subwind{
     width: 49%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+}
+.subcomfort>h4{
+    height: 25%;
+    padding: 0.125rem;
+}
+.subwind>h4{
+    height: 50%;
+    padding: 0.125rem;
 }
 .forecast{
     display: flex;
@@ -108,4 +135,23 @@ section{
     flex-direction: column;
     align-items: center;
     width: 18%;
+    padding: 0.25rem;
+    text-align: center;
+}
+footer{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    width: 99vw;
+    height: 10%;
+    background-color: gray;
+    justify-content: space-between;
+    align-items: center;
+}
+footer>p{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
 }

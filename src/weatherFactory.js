@@ -16,6 +16,15 @@ class Weather{
     set daily(data){
         data.forEach(item => this._daily.push(item));
     }
+    get currentWeather(){
+        return this._currentWeather;
+    }    
+    get hourly(){
+        return this._hourly;
+    }
+    get daily(){
+        return this._daily;
+    }
     setLocationData(lat, lon, location){
         this.lat = lat;
         this.lon = lon;
@@ -35,7 +44,7 @@ class Weather{
             return null;
     }
     getCurrentWeather(){
-        if(Object.keys(this.currentWeather).length)
+        if((Object.keys(this.currentWeather)).length)
             return this.currentWeather;
         else
             return null;
@@ -51,6 +60,12 @@ class Weather{
             return this.daily;
         else
             return null;
+    }
+    forecastExists(){
+        if(Object.keys(this.hourly).length || Object.keys(this.daily).length)
+            return true;
+        else
+            return false;
     }
     isLocationSet(){
         if(this.lat !== null && this.lon !== null)

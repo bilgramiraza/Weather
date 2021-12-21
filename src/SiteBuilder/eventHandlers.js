@@ -33,7 +33,7 @@ async function forecast(weather) {
     if(data !== null){
         weather.setLocationData(data.lat, data.lon, data.location);
         weather.currentWeather = data;
-        display(data);
+        display(weather);
     }
 }
 async function extendedForecast(weather) {
@@ -41,6 +41,7 @@ async function extendedForecast(weather) {
     if(hourlyForecast !== null || dailyForecast !== null ){
         weather.hourly = hourlyForecast;
         weather.daily = dailyForecast;
-        console.log(weather);
+        console.log(weather);  //
+        display(weather);
     }
 }

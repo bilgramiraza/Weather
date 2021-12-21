@@ -19,6 +19,7 @@ https://css-tricks.com/snippets/css/fluid-typography/
 body{
     display: flex;
     flex-direction: column;
+    width: 99vw;
 }
 header{
     display: flex;
@@ -87,6 +88,24 @@ section{
     display: flex;
     flex-direction: column;
 }
+.forecast{
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+}
 .hide{
     display: none;
+}
+.hourly,.daily{
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 95%;
+}
+.hour,.day{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18%;
 }

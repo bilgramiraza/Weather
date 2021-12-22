@@ -1,5 +1,6 @@
 import DOMBuilder from "../DOM/DOMBuilder";
 import {hourElement, dayElement} from "../DOM/DOMElements";
+import {format} from 'date-fns';
 
 function display(weather){
     displayCurrent(weather.getCurrentWeather());
@@ -67,16 +68,7 @@ function displayForecast(hourForecast, dayForecast) {
     const units = document.querySelector('.units>input').checked;
 
     hourElements.forEach((element, index)=>{
-        let time = new Date(hourForecast[index].time).getHours();
-        let hour =`${time} AM`;
-        if(time === 0)
-            hour = '12 AM';
-        else if(time === 12)
-            hour = '12 PM';
-        else if(time>12)
-            hour = `${time-12} PM`;
-        
-        element.children[0].textContent = hour;
+        element.children[0].textContent = format(new Date(hourForecast[index].time),'h aa');
         element.children[1].src = `http://openweathermap.org/img/wn/${hourForecast[index].icon}@4x.png`;
         element.children[1].setAttribute('alt', hourForecast[index].disc);
         let temp = `${parseInt(hourForecast[index].temp)}°C`;
@@ -87,7 +79,7 @@ function displayForecast(hourForecast, dayForecast) {
     });
 
     dayElements.forEach((element, index)=>{
-        element.children[0].textContent = new Date(dayForecast[index].date).getDate();
+        element.children[0].textContent = format(new Date(dayForecast[index].date),'EEEE, MMM d');
         element.children[1].src = `http://openweathermap.org/img/wn/${dayForecast[index].icon}@4x.png`;
         element.children[1].setAttribute('alt', dayForecast[index].disc);
         let minTemp = `${parseInt(dayForecast[index].minTemp)}°C`;
@@ -96,6 +88,6 @@ function displayForecast(hourForecast, dayForecast) {
             minTemp = `${(parseInt(dayForecast[index].minTemp*1.8)+32)}°F`;
             maxTemp = `${(parseInt(dayForecast[index].maxTemp*1.8)+32)}°F`;
         }
-        element.children[2].textContent = `${minTemp} ${maxTemp}`;
+        element.children[2].textContent = `${minTemp} / ${maxTemp}`;
     });
 }

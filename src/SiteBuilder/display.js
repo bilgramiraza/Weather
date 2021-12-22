@@ -79,7 +79,7 @@ function displayForecast(hourForecast, dayForecast) {
     });
 
     dayElements.forEach((element, index)=>{
-        element.children[0].textContent = format(new Date(dayForecast[index].date),'EEEE, MMM d');
+        element.children[0].textContent = format(new Date(dayForecast[index].date),'EEE, MMM d');
         element.children[1].src = `http://openweathermap.org/img/wn/${dayForecast[index].icon}@4x.png`;
         element.children[1].setAttribute('alt', dayForecast[index].disc);
         let minTemp = `${parseInt(dayForecast[index].minTemp)}°C`;

@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="main.js" defer></script>
     <title>Weather</title>
 </head>
 <body>
     <header>
         <div class="search">
-            <input type="text" id="searchBar" placeholder="Enter Location" value="hyderabad">
-            <input type="button" value="Search" class="locationBtn">
+            <input type="text" id="searchBar" placeholder="Enter Location">
+            <button class="locationBtn">
+                <span class="material-icons">search</span>
+            </button>
         </div>
-        <div class="metric">
-            button
+        <div class="units">
+            <input type="checkbox" id="toggle">
+            <label for="toggle"></label>
         </div>
     </header>
     <main>
@@ -31,10 +35,10 @@
     <section>
         <h2>Comfort Level</h2>
         <div class="comfort">
-            <h3 class="humidity">
+            <div class="humidity">
                 <span>Humidity: </span>
                 <span></span>
-            </h3>
+            </div>
             <div class="subcomfort">
                 <h4 class="feelsLike">
                     <span>Feels Like: </span>
@@ -66,9 +70,9 @@
                     <span></span>
                 </h4>
             </div>
-            <h3>
+            <div>
                 <span>Blank Space For extra details</span>
-            </h3>
+            </div>
         </div>
     </section>
     <h2>Forecast</h2>
@@ -76,19 +80,18 @@
     <div class="forecast hide">
         <h3>Hourly Forcast</h3>
         <div class="hourly">
-            <div class="hour"></div>
         </div>
         <h3>Week Forcast</h3>
         <div class="daily">
-            <div class="day"></div>
         </div>
     </div>
     <footer>
         <p>
-            Made By S.M. Raza Hassan Bilgami
+            Made By <br>
+            S.M. Raza Hassan Bilgami
         </p>
         <a href="https://www.github.com/bilgramiraza/Weather" target="_blank">
-            <img src="" alt="Github">
+            <img src="./5de0643bf1bbf77878ff.png" alt="Github" width="50" height="50">
         </a>
     </footer>
 </body>

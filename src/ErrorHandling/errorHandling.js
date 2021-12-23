@@ -9,8 +9,18 @@ const buildErrorDOM = ()=>{
 };
 
 const ErrorDisplay = (text)=>{
+    let errMsg =''; 
+    switch (text) {
+        case 'Not Found':
+            errMsg = 'Location Not Found';
+            break;
+
+        default:
+            errMsg = text;
+            break;
+    }
     const textDOM = document.querySelector(".ErrorText");
-    textDOM.textContent = text;
+    textDOM.textContent = errMsg;
     document.querySelector('.ErrorHandling').classList.add("shift");
     setTimeout(() => {
         document.querySelector('.ErrorHandling').classList.remove("shift");

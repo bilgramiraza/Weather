@@ -16,8 +16,9 @@ async function forecastAPI(lat, lon) {
 }
 
 function responseCheck(response) {
-    if(!response.ok)
-        throw response.statusText;
+    if(!response.ok){
+        console.log(response);
+        throw response.statusText;}
     else
         return response;
 }
